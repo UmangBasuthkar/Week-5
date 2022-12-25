@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src = "fetch.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+    	p {
+    		font-size: 25px;
+    	}
+    	table, td, th {
+			border: solid;
+			border-collapse: collapse;
+			padding: 15px;
+		}
+    </style>
+</head>
+<body>
+	<h1><u>Registered Employees</u></h1>
+	<br>
+	<table>
+		<tr>
+			<th><b>Name</b></th>
+			<th><b>Address</b></th>
+			<th><b>Salary</b></th>
+			<th><b>Date Of Joining</b></th>
+		</tr>
+		<tr>
+			<tbody id = "data"></tbody>
+		</tr>
+	</table>
+	<h3><u>Employees with salary higher than 50,000:-</u></h3>
+	<p id = "salary"></p>
+	<h3><u>Employees who joined in the month of December:-</u></h3>
+	<p id = "Date"></p>
+	<script>
+		getData();
+
+		async function getData()
+		{
+			const response = await fetch("https://rawcdn.githack.com/kmitprojectschool/sem12022/788c820e40a750fecb30433c8d346457b7859abc/employee.json")
+			console.log(response);
+			const data = await response.json();
+			console.log(data);
+			length = data.Employees.length;
+			console.log(data);
+			let temp = "";
+			let sal = "";
+			let date = "";
+			for (i = 0; i < length; i++)
+			{
+				temp += "<tr>";
+				temp += "<td>" + data.Employees[i].Name + "</td>";
+				temp += "<td>" + data.Employees[i].Address + "</td>";
+				temp += "<td>" + data.Employees[i].Salary + "</td>";
+				temp += "<td>" + data.Employees[i].DateOfJoining + "</td>";
+				temp += "</tr>";
+
+				if (data.Employees[i].Salary > 500000)
+				{
+					sal += data.Employees[i].Name;
+				}
+				if (data.Employees[i].DateOfJoining[3] == 1)
+				{
+					if (data.Employees[i].DateOfJoining[4] == 2)
+					{
+						date += data.Employees[i].Name + "<br>";
+					}
+				}
+			}
+			document.getElementById("data").innerHTML = temp;
+			document.getElementById("salary").innerHTML = sal;
+			document.getElementById('Date').innerHTML = date;
+		}
+	</script>
+</body>
+</html>
